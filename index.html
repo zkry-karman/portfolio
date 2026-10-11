@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div class="world" aria-hidden="true"><div class="sun"></div><div class="floor"><div class="grid"></div></div></div>
 <header>
   <div class="wrap">
     <a class="logo" href="#top">ZK</a>
@@ -21,17 +22,19 @@
 </header>
 
 <main id="top">
+  <div class="zone" id="zone"><div class="stage">
   <div class="hero">
     <div class="arcade" id="arcade" aria-hidden="true"></div>
-    <div class="wrap">
-      <p class="status">Open to junior software engineer roles in Paris</p>
-      <h1>Zack Karman</h1>
+    <div class="hero-in">
+      <div class="name3d">      <h1 id="name" aria-label="Zack Karman"><span class="w1">ZACK</span> <span class="w2">KARMAN</span></h1></div>
       <p class="tagline">Your favorite vibe coder's favorite vibe coder</p>
-      <p class="sub">Junior software engineer building in C and C++, headed for game development.</p>
       <div class="btns"><a class="btn" href="#projects">View projects</a><a class="btn alt" href="#contact">Get in touch</a></div>
     </div>
   </div>
 
+    <div class="lvl2" aria-hidden="true"><span class="l1">Level 01</span><span class="l2">Projects</span></div>
+    <div class="scrollhint" aria-hidden="true">Scroll to enter</div>
+  </div></div>
   <section id="projects">
     <div class="wrap">
       <h2>Projects</h2>
@@ -79,6 +82,7 @@
     <div class="wrap"><p class="hint">Move your mouse to the left or right edge to scroll, or swipe on a touch screen.</p></div>
   </section>
 
+  <div class="ticker r" style="--tk:var(--pink);--nm:var(--yellow)" data-level="Level 02" data-name="About me" aria-hidden="true"></div>
   <section id="about">
     <div class="wrap">
       <h2>About</h2>
@@ -87,6 +91,7 @@
     </div>
   </section>
 
+  <div class="ticker" style="--tk:var(--cyan);--nm:var(--pink)" data-level="Level 03" data-name="Skills" aria-hidden="true"></div>
   <section id="skills">
     <div class="wrap">
       <h2>Skills</h2>
@@ -98,6 +103,7 @@
     </div>
   </section>
 
+  <div class="ticker r" style="--tk:var(--yellow);--nm:var(--cyan)" data-level="Level 04" data-name="Experience" aria-hidden="true"></div>
   <section id="path">
     <div class="wrap cols">
       <div>
@@ -121,6 +127,7 @@
     </div>
   </section>
 
+  <div class="ticker" style="--tk:var(--pink);--nm:var(--cyan)" data-level="Final level" data-name="Contact" aria-hidden="true"></div>
   <section id="contact">
     <div class="wrap">
       <h2>Contact</h2>
