@@ -1,47 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="author" content="Zack Karman">
-    <meta name="description" content="This page contains all the things im learning how to create as i learn HTML">
-    <title>My First Web Page</title>
-    <link rel="icon" href="cat_icon.png">
-    <link rel="stylesheet" href="main.css" type="text/css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Zachary Karman | Junior Software Engineer</title>
+<meta name="description" content="Portfolio of Zachary Karman, junior software engineer in Paris working in C, C++ and systems, aiming for game development.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Sora:wght@400;500;600&family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
-    <body>
-        <h1>Hello World !</h1>
+<body>
+<header>
+  <div class="wrap">
+    <a class="logo" href="#top">ZK</a>
+    <nav aria-label="Main">
+      <a href="#projects">Projects</a><a href="#about">About</a><a href="#skills">Skills</a><a href="#path">Experience</a><a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
 
-        <hr>
+<main id="top">
+  <div class="hero">
+    <div class="arcade" id="arcade" aria-hidden="true"></div>
+    <div class="wrap">
+      <p class="status">Open to junior software engineer roles in Paris</p>
+      <h1>Zack Karman</h1>
+      <p class="tagline">Your favorite vibe coder's favorite vibe coder</p>
+      <p class="sub">Junior software engineer building in C and C++, headed for game development.</p>
+      <div class="btns"><a class="btn" href="#projects">View projects</a><a class="btn alt" href="#contact">Get in touch</a></div>
+    </div>
+  </div>
 
-        <h2>Gabagoo</h2>
-        <p>This is my first web page.</p>
+  <section id="projects">
+    <div class="wrap">
+      <h2>Projects</h2>
+      <p class="lede">Built at Ecole 42, mostly from scratch. Select one to open it.</p>
+    </div>
+    <div class="rail" id="rail" aria-label="Projects">
+      <article class="card" style="--c:var(--pink)">
+        <button class="pv" type="button" aria-expanded="false"><span class="shot">Screenshot coming soon</span><span class="name">Minishell</span></button>
+        <div class="details" inert><div class="din">
+          <p>A Unix shell recreated in C from scratch. It runs commands through its own execution engine and command pipeline, built directly on system calls.</p>
+          <h4>Built with</h4><ul class="tags"><li>C</li><li>Unix</li><li>System calls</li></ul>
+          <h4>Highlights</h4><ul class="hl"><li>Process management with fork and execve</li><li>File descriptor redirection and signal handling</li></ul>
+          <div class="row"><span class="soon">Repo link coming soon</span><button class="close" type="button">Close</button></div>
+        </div></div>
+      </article>
+      <article class="card" style="--c:var(--cyan)">
+        <button class="pv" type="button" aria-expanded="false"><span class="shot">Screenshot coming soon</span><span class="name">Zombie Shooter</span></button>
+        <div class="details" inert><div class="din">
+          <p>A game built on modular C++ systems designed with OOP principles, so it stays scalable and easy to maintain.</p>
+          <h4>Built with</h4><ul class="tags"><li>C++</li><li>OOP</li><li>Game logic</li></ul>
+          <h4>Highlights</h4><ul class="hl"><li>Modular, maintainable architecture</li><li>Event-driven state logic for character, weapon and system behaviors</li></ul>
+          <div class="row"><span class="soon">Repo link coming soon</span><button class="close" type="button">Close</button></div>
+        </div></div>
+      </article>
+      <article class="card" style="--c:var(--yellow)">
+        <button class="pv" type="button" aria-expanded="false"><span class="shot">Screenshot coming soon</span><span class="name">So Long &amp; Cub3d</span></button>
+        <div class="details" inert><div class="din">
+          <p>A 2D/3D game rendering engine written in C, with its own map parsing and validation so bad maps are caught before anything renders.</p>
+          <h4>Built with</h4><ul class="tags"><li>C</li><li>Rendering</li><li>Collision detection</li></ul>
+          <h4>Highlights</h4><ul class="hl"><li>Texture mapping and user input</li><li>Configuration file parsing, edge case handling and map geometry checks</li></ul>
+          <div class="row"><span class="soon">Repo link coming soon</span><button class="close" type="button">Close</button></div>
+        </div></div>
+      </article>
+      <article class="card" style="--c:var(--pink)">
+        <button class="pv" type="button" aria-expanded="false"><span class="shot">Screenshot coming soon</span><span class="name">Traveler's Trivia</span></button>
+        <div class="details" inert><div class="din">
+          <p></p>
+          <h4>Built with</h4><ul class="tags"><li>JS</li><li>HTML</li><li>CSS</li></ul>
+          <h4>Highlights</h4><ul class="hl"><li>...</li><li>...</li></ul>
+          <div class="row"><span class="soon">...</span><button class="close" type="button">Close</button></div>
+        </div></div>
+      </article>
+      <article class="card ph"><div class="pv"><span class="shot">Empty slot</span><span class="name">Next project</span></div></article>
+    </div>
+    <div class="wrap"><p class="hint">Move your mouse to the left or right edge to scroll, or swipe on a touch screen.</p></div>
+  </section>
 
-        <h3>All about bush</h3>
-        <p>How much is too much ?
-            <br>&nbsp;&nbsp;&nbsp;...Lets review these bushes.
-            <br>&nbsp;&nbsp;&nbsp;...Bushes come in all shapes and sizes.
-            <br>&nbsp;&nbsp;&nbsp;...okay
-        </p>
+  <section id="about">
+    <div class="wrap">
+      <h2>About</h2>
+      <p class="about">I'm a junior software engineer with a foundation in low-level systems programming, algorithms and data analysis. I'm studying at Ecole 42 in Paris and aiming for a career in game development. My degree in psychology and applied statistics gives me a user-behavior lens on UX and human-centered design.</p>
+      <p class="about">I'm looking for a junior software engineer or systems-focused role, front end or back end.</p>
+    </div>
+  </section>
 
-        <hr>
+  <section id="skills">
+    <div class="wrap">
+      <h2>Skills</h2>
+      <div class="skills">
+        <div><h4>Programming languages</h4><ul class="tags"><li>C</li><li>C++</li><li>C#</li><li>Shell</li><li>Python</li><li>HTML</li><li>CSS</li><li>JavaScript</li></ul></div>
+        <div><h4>Engines and tools</h4><ul class="tags"><li>Unreal Engine</li><li>Unity</li><li>Linux/Unix</li><li>GitHub</li></ul></div>
+        <div><h4>Spoken languages</h4><ul class="tags"><li>English: native</li><li>French: C1</li><li>Italian: B2</li></ul></div>
+      </div>
+    </div>
+  </section>
 
-        <h2>Vive la FRANCE</h2>
-        <p>Why do the french <em>lowkey</em> suck ?</p>
-        <p>They fr be miserable sometimes.</p>
+  <section id="path">
+    <div class="wrap cols">
+      <div>
+        <h2>Education</h2><div style="height:1.4rem"></div>
+        <div class="entry"><b>Ecole 42, Paris</b><span class="when">Jan 2024 to present, in progress</span>
+          <p>Digital Technology Architecture. A peer-to-peer, project-based curriculum built around C/C++, memory management, data structures and Unix systems.</p></div>
+        <div class="entry"><b>ICAN, Paris</b><span class="when">One year, Video Game Development</span>
+          <p>Gameplay mechanics, character controllers and real-time physics in Unity and Unreal Engine, using C++ and C#. Worked on a multi-disciplinary team project.</p></div>
+        <div class="entry"><b>Grand Valley State University, Michigan</b><span class="when">Bachelor's degree, Psychology and Applied Statistics</span>
+          <p>Data cleaning and quantitative analysis in SAS, plus research methods for studying user behavior and decision making.</p></div>
+      </div>
+      <div>
+        <h2>Work experience</h2><div style="height:1.4rem"></div>
+        <div class="entry"><b>Ambassador, CitizenM, Paris</b><span class="when">Jan 2024 to present</span>
+          <p>Runs daily operations across POS, CRM and reservation systems for 24/7 guest service and data synchronization.</p></div>
+        <div class="entry"><b>Stockist, Valentino, Paris</b><span class="when">May 2022 to Dec 2023</span>
+          <p>Kept inventory data accurate by auditing physical stock against ERP records.</p></div>
+        <div class="entry"><b>Bartender, Donkey Taqueria, Grand Rapids</b><span class="when">Jan 2019 to Mar 2022</span>
+          <p>High-volume, fast-paced service with close team communication and customer problem solving.</p></div>
+      </div>
+    </div>
+  </section>
 
-        <hr>
+  <section id="contact">
+    <div class="wrap">
+      <h2>Contact</h2>
+      <p class="lede">Hiring, collaborating or just saying hi? Send a message.</p>
+      <div class="btns"><a class="btn" href="mailto:zkry.karman@gmail.com">Email me</a><a class="btn alt" href="https://github.com/zkry-karman" rel="noopener">GitHub</a></div>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap">Zachary Karman, Paris. Built with vibes.</div></footer>
 
-        <h3>My Job</h3>
-        <p>I <strong>fucking</strong> hate my job as fuck</p>
-
-        <h3>what i want to do instead</h3>
-        <p>almost literally <strong>anything</strong> else</p>
-
-        <hr>
-
-        &lt;&lt;&lt; &copy; <abbr title="Zack Michael Karman">ZMK</abbr> &gt;&gt;&gt;
-
-    </body>
-
+<script src="script.js" defer></script>
+</body>
 </html>
