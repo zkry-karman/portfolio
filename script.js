@@ -266,7 +266,7 @@ var ZOOM = {
   var nameEl=document.getElementById('name'),header=document.querySelector('header');
   var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(reduce){zone.classList.add('flat');return;}
-  var fx=0,fy=0,queued=false;
+  var fx=0,fy=0,sx=0,sy=0,queued=false;
 
   function measure(){
     var tilt=nameEl.parentNode,ht=hero.style.transform,tt=tilt.style.transform;
@@ -278,8 +278,11 @@ var ZOOM = {
     var kr=r.getBoundingClientRect(),em=parseFloat(getComputedStyle(nameEl).fontSize);
     fx=kr.right-hr.left-(1-ZOOM.gapAt)*em;                                  // the slit between K and A
     fy=nr.top-hr.top+nr.height*ZOOM.aimY;                                // height of the aim point on the tall letters
+    var sr=stage.getBoundingClientRect();
+    sx=fx+(hr.left-sr.left);sy=fy+(hr.top-sr.top);                         // the same aim point, in stage coordinates
     hero.style.transform=ht;tilt.style.transform=tt;
     stage.style.setProperty('--fx',fx+'px');stage.style.setProperty('--fy',fy+'px');
+    stage.style.setProperty('--sx',sx+'px');stage.style.setProperty('--sy',sy+'px');
     update();
   }
 
@@ -291,8 +294,8 @@ var ZOOM = {
     hero.style.opacity=p<ZOOM.fadeFrom?'':String(Math.max(0,1-(p-ZOOM.fadeFrom)/(0.9-ZOOM.fadeFrom)));
     hero.style.pointerEvents=p>.3?'none':'';
     var q=Math.min(1,Math.max(0,(p-.3)/.7)),e=1-Math.pow(1-q,3);           // level card: grows out of the slit, then glides to center
-    lvl2.style.left=(fx+(stage.clientWidth/2-fx)*e)+'px';
-    lvl2.style.top=(fy+(stage.clientHeight/2-fy)*e)+'px';
+    lvl2.style.left=(sx+(stage.clientWidth/2-sx)*e)+'px';
+    lvl2.style.top=(sy+(stage.clientHeight/2-sy)*e)+'px';
     lvl2.style.transform='translate(-50%,-50%) scale('+(0.02+0.98*e)+')';
     lvl2.style.opacity=Math.min(1,q*3);
     hint.style.opacity=Math.max(0,1-p*6);
