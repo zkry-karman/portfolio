@@ -11,7 +11,7 @@ var ARCADE = {
   ghostDelay: 1.6,     // seconds between Pac-Man and the first ghost
   ghostSpacing: 0.5,   // seconds between each ghost
   pause: 1,            // empty-screen pause (seconds) before the scene restarts
-  respawnDelay: 0.75,  // seconds after the last ghost passes a spot before its coin reappears
+  respawnDelay: 0.25,  // seconds after the last ghost passes a spot before its coin reappears
   offscreen: 70        // how far past the screen edges the lanes extend, in px
 };
 
