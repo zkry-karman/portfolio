@@ -12,8 +12,64 @@ var ARCADE = {
   ghostSpacing: 0.5,   // seconds between each ghost
   pause: 1,            // empty-screen pause (seconds) before the scene restarts
   respawnDelay: 0.75,  // seconds after the last ghost passes a spot before its coin reappears
+  coinStagger: 0.025,  // intro: seconds between each coin popping in
+  pacDelay: 0.6,       // intro: pause after the last coin before Pac-Man shows up
   offscreen: 70        // how far past the screen edges the lanes extend, in px
 };
+
+
+/* ---------------------------------------------------------------------
+   Intro, step 1: the letters of the name fall in from the top of the screen,
+   one at a time in a random order. (Steps 2 and 3, the coins and Pac-Man,
+   are in the Pac-Man scene below.)
+   --------------------------------------------------------------------- */
+var INTRO = {
+  startDelay: 0.25,   // seconds before the first letter drops
+  letterGap: 0.15,    // seconds between one letter's drop and the next
+  jitter: 0.05,       // random wobble on each letter's timing
+  fallTime: 0.9,      // how long each letter takes to fall and bounce into place
+  fontWait: 1800      // max milliseconds to wait for the pixel font before starting anyway
+};
+var introState = {active:false, lettersDone:true, onLetters:null};
+(function(){
+  var html=document.documentElement,nameEl=document.getElementById('name');
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!nameEl||reduce||window.scrollY>50||!html.classList.contains('intro')||!Element.prototype.animate){html.classList.remove('intro');return;}
+  introState.active=true;introState.lettersDone=false;
+
+  var chars=[];                                                         // wrap each letter so it can move on its own
+  ['.w1','.w2'].forEach(function(sel){
+    var w=nameEl.querySelector(sel),txt=w.textContent;w.textContent='';
+    txt.split('').forEach(function(ch){var s=document.createElement('span');s.className='ch';s.textContent=ch;w.appendChild(s);chars.push(s);});
+  });
+
+  function finish(){
+    introState.lettersDone=true;html.classList.remove('intro');
+    var f=introState.onLetters;introState.onLetters=null;if(f)f();
+  }
+  function play(){
+    var ratio=nameEl.getBoundingClientRect().height/(nameEl.offsetHeight||1)||1;   // the name is stretched taller, so distances scale too
+    var order=chars.map(function(c,i){return i;});
+    for(var i=order.length-1;i>0;i--){var k=Math.floor(Math.random()*(i+1)),tmp=order[i];order[i]=order[k];order[k]=tmp;}   // random order
+    var end=0;
+    order.forEach(function(ci,slot){
+      var el=chars[ci],r=el.getBoundingClientRect();
+      var fall=(r.bottom+40)/ratio;                                     // start just above the top edge of the screen
+      var delay=Math.max(0,(INTRO.startDelay+slot*INTRO.letterGap+(Math.random()*2-1)*INTRO.jitter)*1000),dur=INTRO.fallTime*1000;
+      el.animate([
+        {transform:'translateY('+(-fall)+'px)',offset:0,easing:'cubic-bezier(.5,0,.9,.55)'},
+        {transform:'translateY(0)',offset:.7,easing:'ease-out'},
+        {transform:'translateY(-14px)',offset:.82,easing:'ease-in'},
+        {transform:'translateY(0)',offset:1}
+      ],{duration:dur,delay:delay,fill:'backwards'});
+      el.style.opacity='1';
+      end=Math.max(end,delay+dur);
+    });
+    setTimeout(finish,end+80);
+  }
+  var fontsReady=(document.fonts&&document.fonts.load)?Promise.race([document.fonts.load('400 1em "Press Start 2P"'),new Promise(function(r){setTimeout(r,INTRO.fontWait);})]):Promise.resolve();
+  fontsReady.catch(function(){}).then(function(){requestAnimationFrame(play);});
+})();
 
 (function(){
   var rail=document.getElementById('rail');
@@ -69,6 +125,7 @@ var ARCADE = {
   });
 
   var coins=[],next=0,back=0,t=0,T=1,visible=true,last=0;
+  var phase=(introState.active&&!reduce)?'wait':'run',revealIdx=0;       // intro: wait -> coins -> run
   var W,x0,yTop,drop,dT,turnX,L;
 
   // Position, and direction, of a point d pixels along the path.
@@ -97,7 +154,7 @@ var ARCADE = {
     for(var d=gap;d<=L;d+=gap){
       var p=pointAt(d);
       if(p.x<8||p.x>W-8)continue;
-      var el=document.createElement('div');el.className='coin';
+      var el=document.createElement('div');el.className='coin'+((phase==='run'||(phase==='coins'&&coins.length<revealIdx))?'':' pre');
       el.style.left=p.x+'px';el.style.top=p.y+'px';layer.appendChild(el);
       coins.push({el:el,d:d});
     }
@@ -113,7 +170,7 @@ var ARCADE = {
     pac.style.transform='translate('+p.x+'px,'+p.y+'px) rotate('+(p.dy>0?90:0)+'deg)';
     while(next<coins.length&&coins[next].d<=D){coins[next].el.classList.add('eaten');next++;}
     var lastD=D-(C.ghostDelay+(ghosts.length-1)*C.ghostSpacing+C.respawnDelay)*C.speed;   // just behind the last ghost
-    while(back<next&&coins[back].d<=lastD){coins[back].el.classList.remove('eaten');back++;}   // its coin comes back
+    while(back<next&&coins[back].d<=lastD){var ce=coins[back].el;ce.classList.remove('eaten');ce.classList.add('pop');back++;}   // its coin comes back, with a little glow
     ghosts.forEach(function(g,i){
       var q=pointAt(D-(C.ghostDelay+i*C.ghostSpacing)*C.speed);
       g.el.style.transform='translate('+q.x+'px,'+q.y+'px)';
@@ -139,13 +196,29 @@ var ARCADE = {
     if(document.fonts.ready)document.fonts.ready.then(rebuildSoon);
     if(document.fonts.addEventListener)document.fonts.addEventListener('loadingdone',rebuildSoon);
   }
+  layer.addEventListener('animationend',function(e){if(e.target.classList&&e.target.classList.contains('coin'))e.target.classList.remove('pop');});
   build();
   if(reduce)return;
   if('IntersectionObserver' in window){
     new IntersectionObserver(function(e){visible=e[0].isIntersecting;}).observe(layer);
   }
-  last=performance.now();
-  requestAnimationFrame(frame);
+  var running=false;
+  function startRun(){                                                  // intro step 3: Pac-Man appears and the chase begins
+    if(running)return;running=true;phase='run';
+    coins.forEach(function(c){c.el.classList.remove('pre');});
+    t=0;next=0;back=0;last=performance.now();requestAnimationFrame(frame);
+  }
+  function revealCoins(){                                               // intro step 2: coins pop in one after another, in path order
+    phase='coins';revealIdx=0;
+    (function tick(){
+      if(revealIdx>=coins.length){setTimeout(startRun,C.pacDelay*1000);return;}
+      var el=coins[revealIdx].el;el.classList.remove('pre');el.classList.add('pop');revealIdx++;
+      setTimeout(tick,C.coinStagger*1000);
+    })();
+  }
+  if(phase==='run')startRun();
+  else if(introState.lettersDone)revealCoins();
+  else introState.onLetters=revealCoins;
 })();
 
 /* ---------------------------------------------------------------------

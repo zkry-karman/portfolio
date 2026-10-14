@@ -187,3 +187,17 @@ h3.more{margin:0 0 .4rem;font:400 .8rem/1.5 var(--px);color:var(--cyan)}
 }
 
 @media (max-width:700px){.world{--hz:54%}}
+
+/* ===== intro: letters fall in, then the coins pop in, then Pac-Man runs ===== */
+.ch{display:inline-block}
+.intro #name{visibility:hidden}
+.intro .ch{visibility:visible;opacity:0}
+.intro main{z-index:45}
+.intro .hero{overflow:visible}
+.intro.js .zone:not(.flat) .stage{overflow:visible}
+.coin.pre{opacity:0;transform:scale(0);transition:none}
+.coin.pop{animation:coinback .6s ease-out}
+@keyframes coinback{
+  0%{opacity:0;transform:scale(.2)}
+  45%{opacity:1;transform:scale(1.55);box-shadow:0 0 18px 5px rgba(255,230,0,.95)}
+  100%{opacity:1;transform:scale(1);box-shadow:0 0 8px rgba(255,230,0,.7)}}
