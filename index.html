@@ -62,11 +62,20 @@
       <h3 class="more">More projects</h3>
       <p class="lede">Mostly built at Ecole 42, from scratch. Select one to open it.</p>
     </div>
+    <!-- A CARD'S MAIN PICTURE is the <span class="shot"> inside its button. Put a photo OR a video there.
+         A video in that spot plays by itself right in the carousel, even if the card is not opened:
+         <span class="shot"><video src="projectPhotos/minishell-demo.mp4" muted loop playsinline></video></span> -->
     <div class="rail" id="rail" aria-label="More projects">
       <article class="card" style="--c:var(--pink)">
         <button class="pv" type="button" aria-expanded="false"><span class="shot"><img src="projectPhotos/minishell.png" alt="Minishell running in a terminal"></span><span class="name">Minishell</span></button>
         <div class="details" inert><div class="din">
           <p>A Unix shell recreated in C from scratch. It runs commands through its own execution engine and command pipeline, built directly on system calls.</p>
+          <div class="media">
+            <!-- MORE PHOTOS / VIDEOS for this project: add one line per item, in the order you want them shown.
+                 A photo:  <img src="projectPhotos/minishell-2.png" alt="what it shows" loading="lazy">
+                 A video:  <video src="projectPhotos/minishell-demo.mp4" muted loop playsinline></video>
+                 Videos start by themselves when they scroll into view. -->
+          </div>
           <h4>Built with</h4><ul class="tags"><li>C</li><li>Unix</li><li>System calls</li></ul>
           <h4>Highlights</h4><ul class="hl"><li>Process management with fork and execve</li><li>File descriptor redirection and signal handling</li></ul>
           <div class="row"><span class="soon">Repo link coming soon</span><button class="close" type="button">Close</button></div>
@@ -76,6 +85,12 @@
         <button class="pv" type="button" aria-expanded="false"><span class="shot"><img src="projectPhotos/zombies.png" alt="Zombie Shooter"></span><span class="name">Zombie Shooter</span></button>
         <div class="details" inert><div class="din">
           <p>A game built on modular C++ systems designed with OOP principles, so it stays scalable and easy to maintain.</p>
+          <div class="media">
+            <!-- MORE PHOTOS / VIDEOS for this project: add one line per item, in the order you want them shown.
+                 A photo:  <img src="projectPhotos/zombies-2.png" alt="what it shows" loading="lazy">
+                 A video:  <video src="projectPhotos/zombies-demo.mp4" muted loop playsinline></video>
+                 Videos start by themselves when they scroll into view. -->
+          </div>
           <h4>Built with</h4><ul class="tags"><li>C++</li><li>OOP</li><li>Game logic</li></ul>
           <h4>Highlights</h4><ul class="hl"><li>Modular, maintainable architecture</li><li>Event-driven state logic for character, weapon and system behaviors</li></ul>
           <div class="row"><span class="soon">Repo link coming soon</span><button class="close" type="button">Close</button></div>
@@ -85,6 +100,12 @@
         <button class="pv" type="button" aria-expanded="false"><span class="shot"><img src="projectPhotos/cubed.png" alt="Cub3d"></span><span class="name">So Long &amp; Cub3d</span></button>
         <div class="details" inert><div class="din">
           <p>A 2D/3D game rendering engine written in C, with its own map parsing and validation so bad maps are caught before anything renders.</p>
+          <div class="media">
+            <!-- MORE PHOTOS / VIDEOS for this project: add one line per item, in the order you want them shown.
+                 A photo:  <img src="projectPhotos/cubed-2.png" alt="what it shows" loading="lazy">
+                 A video:  <video src="projectPhotos/cubed-demo.mp4" muted loop playsinline></video>
+                 Videos start by themselves when they scroll into view. -->
+          </div>
           <h4>Built with</h4><ul class="tags"><li>C</li><li>Rendering</li><li>Collision detection</li></ul>
           <h4>Highlights</h4><ul class="hl"><li>Texture mapping and user input</li><li>Configuration file parsing, edge case handling and map geometry checks</li></ul>
           <div class="row"><span class="soon">Repo link coming soon</span><button class="close" type="button">Close</button></div>
@@ -93,10 +114,17 @@
       <article class="card" style="--c:var(--pink)">
         <button class="pv" type="button" aria-expanded="false"><span class="shot"><img src="projectPhotos/travTriv.png" alt="Traveler's Trivia homescreen"></span><span class="name">Traveler's Trivia</span></button>
         <div class="details" inert><div class="din">
-          <p></p>
-          <h4>Built with</h4><ul class="tags"><li>JS</li><li>HTML</li><li>CSS</li></ul>
-          <h4>Highlights</h4><ul class="hl"><li>...</li><li>...</li></ul>
-          <div class="row"><span class="soon">...</span><button class="close" type="button">Close</button></div>
+          <p>A travel-themed trivia game that runs in the browser, built with JavaScript, HTML and CSS.</p>
+          <div class="media">
+            <!-- MORE PHOTOS / VIDEOS for this project: add one line per item, in the order you want them shown.
+                 A photo:  <img src="projectPhotos/travTriv-2.png" alt="what it shows" loading="lazy">
+                 A video:  <video src="projectPhotos/travTriv-demo.mp4" muted loop playsinline></video>
+                 Videos start by themselves when they scroll into view. -->
+          </div>
+          <h4>Built with</h4><ul class="tags"><li>JavaScript</li><li>HTML</li><li>CSS</li></ul>
+          <!-- TO ADD: a "Highlights" list for this project, like the other cards. Copy this and fill it in:
+               <h4>Highlights</h4><ul class="hl"><li>first thing worth knowing</li><li>second thing</li></ul> -->
+          <div class="row"><span class="soon">Repo link coming soon</span><button class="close" type="button">Close</button></div>
         </div></div>
       </article>
       <article class="card ph"><div class="pv"><span class="shot">???</span><span class="name">More on the way...</span></div></article>
@@ -108,8 +136,8 @@
   <section id="about">
     <div class="wrap">
       <h2>About</h2>
-      <p class="about">I'm a junior software engineer with a foundation in low-level systems programming, algorithms and data analysis. I'm studying at Ecole 42 in Paris and aiming for a career in game development. My degree in psychology and applied statistics gives me a user-behavior lens on UX and human-centered design.</p>
-      <p class="about">I'm looking for a junior software engineer or systems-focused role, front end or back end.</p>
+      <p class="about">Hi, I'm Zack, a junior software engineer in Paris. I'm studying at Ecole 42, where there are no lectures and no teachers, just projects, fellow students and a lot of figuring things out together. Before that I studied psychology and statistics, which left me fascinated by how people think and behave, and I bring that curiosity into everything I build.</p>
+      <p class="about">Game development is what I'm most passionate about, and it's where I'd love to keep growing. Right now I'm looking for a junior software engineer role, front end or back end, with a friendly team where I can learn, contribute and make things people enjoy. My best project so far is a website built around my cat Goose's treat feeder, which tells you most of what you need to know about me.</p>
     </div>
   </section>
 

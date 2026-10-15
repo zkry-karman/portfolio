@@ -382,3 +382,35 @@ var ZOOM = {
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){setTimeout(measure,150);});
   measure();
 })();
+
+/* ---------------------------------------------------------------------
+   Project media: a gallery inside each opened card, and videos that play
+   by themselves whenever they are on screen (and pause when they are not).
+   --------------------------------------------------------------------- */
+(function(){
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // galleries: arrows and a counter appear when a card has more than one photo/video
+  [].forEach.call(document.querySelectorAll('.media'),function(m){
+    var items=m.querySelectorAll('img,video');if(!items.length)return;
+    var w=document.createElement('div');w.className='mwrap';m.parentNode.insertBefore(w,m);w.appendChild(m);
+    if(items.length<2)return;
+    var cnt=document.createElement('span');cnt.className='mcount';w.appendChild(cnt);
+    function upd(){cnt.textContent=Math.min(Math.round(m.scrollLeft/(m.clientWidth||1))+1,items.length)+' / '+items.length;}
+    [['prev',-1,'Previous'],['next',1,'Next']].forEach(function(d){
+      var b=document.createElement('button');b.type='button';b.className='mnav '+d[0];b.setAttribute('aria-label',d[2]+' photo or video');
+      b.addEventListener('click',function(){m.scrollBy({left:d[1]*m.clientWidth,behavior:reduce?'auto':'smooth'});});
+      w.appendChild(b);
+    });
+    m.addEventListener('scroll',upd,{passive:true});upd();
+  });
+
+  // videos: muted, looping, and played only while at least 40% of them is on screen
+  var vids=[].slice.call(document.querySelectorAll('video'));
+  vids.forEach(function(v){v.muted=true;v.loop=true;v.playsInline=true;if(!v.getAttribute('preload'))v.preload='metadata';});
+  if(reduce){vids.forEach(function(v){if(!v.closest('button')&&!v.closest('a'))v.controls=true;});return;}   // reduced motion: no autoplay, show controls instead
+  function sync(v){if(v._on&&!document.hidden){var p=v.play();if(p&&p.catch)p.catch(function(){});}else v.pause();}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){e.target._on=e.isIntersecting&&e.intersectionRatio>=.4;sync(e.target);});},{threshold:[0,.4,1]});
+  vids.forEach(function(v){io.observe(v);});
+  document.addEventListener('visibilitychange',function(){vids.forEach(sync);});
+})();
